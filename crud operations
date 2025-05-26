@@ -1,0 +1,77 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.tnsif.tkr.jdbcdemo.dao.DBUtil;
+  static Connection con;
+     
+     static PreparedStatement pst;
+     
+	 static {
+		 con=DBUtil.getConnection();
+		 if(con!=null) {
+			 System.out.println("connection is sucess");
+		 }
+	 }
+	 //Reading records from database
+	 public static void showStudent() {
+			try {
+
+				String query = "SELECT * FROM student";
+				pst = con.prepareStatement(query);
+				ResultSet rs = pst.executeQuery();
+while (rs.next()) {
+System.out.println(rs.getInt(1) + "\t" + rs.getString(2));
+					}
+				rs.close();
+				} catch (SQLException e) {
+System.out.println("Error...." + e.getMessage());
+			}
+		}
+	 //Adding student data to table in database
+	 public static int addStudent(int sid,String sname) {
+		 int n=0;
+		 try {
+			 pst=con.prepareStatement("INSERT INTO student values(?,?)");
+			 pst.setInt(1,sid);
+			 pst.setString(2, sname);
+			 n=pst.executeUpdate();
+			 System.out.println("data inserted");
+			 
+		 }
+		 catch(Exception e) {
+			 System.err.println(e);
+		 }
+		return n;
+		 
+	 }
+	 //deleting student record
+	 public static boolean deleteStudent(int sid) {
+			boolean status = false;
+			try {
+			String query = "DELETE FROM student WHERE sid=" + sid;
+			pst = con.prepareStatement(query);
+			pst.executeUpdate();
+			System.out.println("one record deleted successfully");
+			} catch (SQLException e) {
+System.out.println("Error...." + e.getMessage());
+			}
+			return status;
+		}
+
+		public static boolean updateEmpName(int sid, String sname) {
+			boolean status = false;
+			try {	
+		String query = "UPDATE student set sname='" + sname + "' WHERE sid=" + sid;
+pst = con.prepareStatement(query);
+					pst.executeUpdate();
+					status = true;
+					System.out.println("updated successfully");
+			} catch (SQLException e) {
+				System.out.println("Error...." + e.getMessage());
+			}
+			return status;
+		}
+}
+
