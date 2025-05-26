@@ -1,0 +1,85 @@
+
+//Demo for performing various operations
+public class Operations {
+	public static boolean positiveNumber(int num) {
+		
+		if(num>0)
+			return true;
+		else
+			return false;	
+	}
+	
+	//fact---> 3 things should happen
+	//postive (fact)--> fact>0
+	//fact=1 --> fact=1
+	//fact --> negative value
+	public static long fact(int no) {
+		
+		long f=1;
+		if(no<0)
+			return -1;
+		
+		for(int i=1;i<=no;i++)
+			f=f*i;
+		return f;
+	
+	}
+	
+	
+—-------------------------------------------------------------------------------------------------------------------------
+
+public class TestOperations {
+	
+	@Test
+	public void testForPositive() {
+		//System.out.println(Operations.positiveNumber(5));
+		Assertions.assertTrue(Operations.positiveNumber(5));
+	}
+	
+	@Test
+	public void testForNegative() {
+		//System.out.println(Operations.positiveNumber(-5));
+     Assertions.assertFalse(Operations.positiveNumber(-5));
+	}
+	
+	@Test
+	public void testForFactorial() {
+		long expected=120;
+		long actual=Operations.fact(5);
+		Assertions.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testForzeroFactorial() {
+		long expected=1;
+		long actual=Operations.fact(0);
+		Assertions.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testforNegativeFactorial() {
+		long expected=-1;
+		long actual=Operations.fact(-5);
+		Assertions.assertEquals(expected, actual);
+	}
+	
+}
+—-------------------------------------------------------------------------------------------------------------------------
+public class TestAnnotations {
+	
+	@BeforeAll
+	void beforeTest() {
+		System.out.println("exceutes before test case");
+	}
+	
+	@AfterAll
+	void AfterTest() {
+		System.out.println("exceutes after test case");
+	}
+	
+	@AfterEach
+	void afterEachTest() {
+		System.out.println("exceutes after each test case");
+	}
+	
+}
