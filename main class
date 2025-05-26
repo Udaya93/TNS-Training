@@ -1,0 +1,60 @@
+
+import com.tnsif.tkr.jdbcdemo.service.CurdOperations;
+public class Executor {
+	public static void main(String[] args) {
+         // CurdOperations.addStudent(103, "Neha");
+         // CurdOperations.deleteStudent(102);
+            //CurdOperations.updateEmpName(101,"lavanya");
+	CurdOperations.showStudent();
+	}
+}
+
+//Demo for CURD operations
+public class JdbcDemo {
+	//seven steps
+	//load the driver
+	//private static String DRIVERNAME="org.postgresql.Driver";
+	private static String USERNAME="postgres";
+	private static String PASSWORD="Admin123";
+	//private static String DBNAME="KPRIT";
+	private static String URL="jdbc:postgresql://localhost:5433/KPRIT"
+	;
+	
+	public static void main(String[] args) {
+		try {
+			
+			//1. load the driver
+			Class.forName("org.postgresql.Driver");
+			System.out.println("Driver is loaded");
+			
+			//2. Get the connection
+			Connection con=DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			System.out.println("Connection established");
+			
+			//3. create the statement
+			String query="select * from student";
+			Statement stmt=con.createStatement();
+			
+			//4.Execute Query
+			
+			
+			//5.Retrieving the data
+			ResultSet rs =stmt.executeQuery(query);;
+			while(rs.next()) {
+				System.out.print(rs.getInt(1));
+				System.out.print(rs.getString(2));
+				System.out.print(rs.getString(3));
+				System.out.println();
+			}
+			
+			//6.close the resources
+			stmt.close();
+			con.close();
+			
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+				
+	}
+}
